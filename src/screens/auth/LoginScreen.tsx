@@ -1,0 +1,107 @@
+import React, {useState} from 'react';
+import {
+  View, Text, TextInput, TouchableOpacity, Image,
+  StyleSheet, KeyboardAvoidingView, Platform, ScrollView, Alert,
+} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useTranslation} from 'react-i18next';
+import {AuthStackParamList} from '../../navigation/AuthNavigator';
+import {loginApi} from '../../lib/services/auth.service';
+import {useAuth} from '../../contexts/AuthContext';
+
+type Props = {navigation: NativeStackNavigationProp<AuthStackParamList, 'Login'>};
+
+export default function LoginScreen({navigation}: Props) {
+  const {t} = useTranslation();
+  const {login} = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  async function handleLogin() {
+    if (!email.trim() || !password) {
+      Alert.alert(t('common.error'), t('auth.login.errorFillFields'));
+      return;
+    }
+    setLoading(true);
+    try {
+      const {accessToken, refreshToken, user} = await loginApi(email.trim(), password);
+      await login(accessToken, refreshToken, user);
+    } catch (err: any) {
+      const msg = err?.response?.data?.message || t('auth.login.errorFailed');
+      Alert.alert(t('common.error'), Array.isArray(msg) ? msg.join('\n') : msg);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+        <Image
+          source={require('../../assets/logo-with-name.png')}
+          style={styles.logo}
+          resizeMode="contain"
+        />
+        <Text style={styles.subtitle}>{t('auth.login.subtitle')}</Text>
+
+        <View style={styles.form}>
+          <Text style={styles.label}>{t('auth.emailLabel')}</Text>
+          <TextInput
+            style={styles.input}
+            value={email}
+            onChangeText={setEmail}
+            placeholder="you@example.com"
+            placeholderTextColor="#9CA3AF"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+          <Text style={styles.label}>{t('auth.passwordLabel')}</Text>
+          <TextInput
+            style={styles.input}
+            value={password}
+            onChangeText={setPassword}
+            placeholder="••••••••"
+            placeholderTextColor="#9CA3AF"
+            secureTextEntry
+          />
+          <TouchableOpacity
+            style={[styles.button, loading && styles.buttonDisabled]}
+            onPress={handleLogin}
+            disabled={loading}>
+            <Text style={styles.buttonText}>{loading ? t('auth.login.signingIn') : t('auth.login.signIn')}</Text>
+          </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity onPress={() => navigation.replace('Signup')}>
+          <Text style={styles.link}>
+            {t('auth.login.noAccount')} <Text style={styles.linkBold}>{t('auth.login.signUp')}</Text>
+          </Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </KeyboardAvoidingView>
+  );
+}
+
+const styles = StyleSheet.create({
+  flex: {flex: 1, backgroundColor: '#F9FAFB'},
+  container: {flexGrow: 1, alignItems: 'center', justifyContent: 'center', padding: 24},
+  logo: {width: 150, height: 100, marginBottom: 8},
+  subtitle: {fontSize: 14, color: '#6B7280', marginBottom: 32},
+  form: {width: '100%', gap: 8, marginBottom: 24},
+  label: {fontSize: 13, fontWeight: '600', color: '#374151', marginBottom: 2},
+  input: {
+    backgroundColor: '#fff', borderWidth: 1, borderColor: '#E5E7EB',
+    borderRadius: 12, paddingHorizontal: 16, paddingVertical: 12,
+    fontSize: 15, color: '#111827', marginBottom: 8,
+  },
+  button: {
+    backgroundColor: '#3e6378', borderRadius: 12,
+    paddingVertical: 14, alignItems: 'center', marginTop: 4,
+  },
+  buttonDisabled: {opacity: 0.6},
+  buttonText: {color: '#fff', fontSize: 15, fontWeight: '600'},
+  link: {fontSize: 13, color: '#6B7280'},
+  linkBold: {color: '#3e6378', fontWeight: '600'},
+});

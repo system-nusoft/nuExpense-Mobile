@@ -8,6 +8,7 @@ import {RouteProp} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {AuthStackParamList} from '../../navigation/AuthNavigator';
 import {verifyEmailApi, resendOtpApi} from '../../lib/services/auth.service';
+import {getApiErrorMessage} from '../../lib/api';
 import {useAuth} from '../../contexts/AuthContext';
 
 type Props = {
@@ -32,9 +33,8 @@ export default function VerifyEmailScreen({navigation, route}: Props) {
     try {
       const {accessToken, refreshToken, user} = await verifyEmailApi(email, otp);
       await login(accessToken, refreshToken, user);
-    } catch (err: any) {
-      const msg = err?.response?.data?.message || t('auth.verifyEmail.errorInvalidCode');
-      Alert.alert(t('common.error'), Array.isArray(msg) ? msg.join('\n') : msg);
+    } catch (err) {
+      Alert.alert(t('common.error'), getApiErrorMessage(err, t('auth.verifyEmail.errorInvalidCode')));
     } finally {
       setLoading(false);
     }
@@ -45,8 +45,8 @@ export default function VerifyEmailScreen({navigation, route}: Props) {
     try {
       await resendOtpApi(email);
       Alert.alert(t('auth.verifyEmail.resendSentTitle'), t('auth.verifyEmail.resendSentMessage'));
-    } catch {
-      Alert.alert(t('common.error'), t('auth.verifyEmail.resendError'));
+    } catch (err) {
+      Alert.alert(t('common.error'), getApiErrorMessage(err, t('auth.verifyEmail.resendError')));
     } finally {
       setResending(false);
     }

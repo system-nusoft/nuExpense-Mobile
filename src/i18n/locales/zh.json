@@ -47,7 +47,9 @@
       "haveAccount": "已经有账户了？",
       "signIn": "登录",
       "errorAllFieldsRequired": "所有字段均为必填项。",
-      "errorFailed": "注册失败。"
+      "errorFailed": "注册失败。",
+      "legalPrefix": "创建账户即表示你同意我们的",
+      "legalAnd": "和"
     },
     "verifyEmail": {
       "title": "请查看您的电子邮箱",
@@ -79,7 +81,9 @@
     "scanCta": {
       "eyebrow": "AI 收据扫描仪",
       "title": "扫描收据",
-      "subtitle": "上传照片，让 AI 提取详细信息"
+      "subtitle": "上传照片，让 AI 提取详细信息",
+      "upload": "上传收据",
+      "addManual": "手动添加"
     },
     "backToCurrent": "返回当前月份",
     "stats": {
@@ -104,10 +108,10 @@
     "uncategorized": "未分类",
     "editTitle": "编辑支出",
     "addTitle": "添加支出",
-    "viewReceipt": "🧾  查看收据",
+    "viewReceipt": "查看收据",
     "scanningReceipt": "正在扫描收据…",
-    "scanWithCamera": "📷  用相机扫描",
-    "fromGallery": "🖼  从相册选择",
+    "scanWithCamera": "用相机扫描",
+    "fromGallery": "从相册选择",
     "orEnterManually": "或手动输入",
     "vendorLabel": "商家名称",
     "vendorPlaceholder": "例如：麦当劳",
@@ -140,7 +144,7 @@
     "newTitle": "新建分类",
     "nameLabel": "名称",
     "namePlaceholder": "例如：餐饮",
-    "iconLabel": "图标（表情符号）",
+    "iconLabel": "图标",
     "colorLabel": "颜色",
     "budgetLabel": "月度预算（可选）",
     "budgetPlaceholder": "例如：5000",
@@ -156,8 +160,8 @@
   "scan": {
     "title": "扫描收据",
     "subtitle": "上传收据照片，让 AI 提取详细信息",
-    "useCamera": "📷  使用相机",
-    "chooseFromGallery": "🖼  从相册选择",
+    "useCamera": "使用相机",
+    "chooseFromGallery": "从相册选择",
     "scanningReceipt": "正在扫描收据…",
     "reviewTitle": "核对收据",
     "saveExpense": "保存支出",
@@ -174,7 +178,12 @@
     "cameraPermissionMessage": "Zingg 需要相机权限来扫描收据。",
     "cameraPermissionAllow": "允许",
     "cameraPermissionDeniedTitle": "权限被拒绝",
-    "cameraPermissionDeniedMessage": "扫描收据需要相机权限。"
+    "cameraPermissionDeniedMessage": "扫描收据需要相机权限。",
+    "eyebrow": "AI 收据扫描",
+    "tip": "清晰照片效果更好 — 展平收据并避免反光。",
+    "scanningHint": "正在提取商家、金额与日期…",
+    "reviewHint": "保存前请确认信息。",
+    "savedBody": "已添加到支出。准备扫描下一张？"
   },
   "settings": {
     "back": "返回",
@@ -183,7 +192,7 @@
     "fullNameLabel": "姓名",
     "fullNamePlaceholder": "您的姓名",
     "homeCurrencyLabel": "本位币",
-    "currencyWarning": "⚠️ 更改本位币仅影响新支出，现有支出将保留原有换算。",
+    "currencyWarning": "更改本位币仅影响新支出，现有支出将保留原有换算。",
     "saving": "正在保存…",
     "saveChanges": "保存更改",
     "account": "账户",
@@ -207,6 +216,22 @@
     "restoreSuccess": "购买已恢复。",
     "restoreNone": "未找到可恢复的有效购买。",
     "loadingOffering": "加载中…",
-    "offeringUnavailable": "高级版当前不可用，请稍后重试。"
+    "offeringUnavailable": "高级版当前不可用，请稍后重试。",
+    "upsell": {
+      "eyebrow": "Zingg 高级版",
+      "title": "看清消费背后的故事",
+      "body": "解锁 AI 月度回顾、更深洞察，以及无广告体验。",
+      "insightsTitle": "AI 回顾是高级版功能",
+      "insightsBody": "获得清晰的月度叙事，了解钱花在哪里——为你而写，不是表格堆砌。",
+      "featureRecap": "AI 月度消费回顾",
+      "featureInsights": "更深的商家与趋势洞察",
+      "featureAdFree": "无广告记账"
+    }
+  },
+  "legal": {
+    "sectionTitle": "法律信息",
+    "privacy": "隐私政策",
+    "terms": "使用条款",
+    "support": "联系支持"
   }
 }

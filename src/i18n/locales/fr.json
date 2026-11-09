@@ -47,7 +47,9 @@
       "haveAccount": "Vous avez déjà un compte ?",
       "signIn": "Se connecter",
       "errorAllFieldsRequired": "Tous les champs sont obligatoires.",
-      "errorFailed": "Échec de l'inscription."
+      "errorFailed": "Échec de l'inscription.",
+      "legalPrefix": "En créant un compte, vous acceptez nos",
+      "legalAnd": "et"
     },
     "verifyEmail": {
       "title": "Vérifiez votre e-mail",
@@ -79,7 +81,9 @@
     "scanCta": {
       "eyebrow": "Scanner de reçus par IA",
       "title": "Scanner un reçu",
-      "subtitle": "Téléversez une photo, laissez l'IA en extraire les détails"
+      "subtitle": "Téléversez une photo, laissez l'IA en extraire les détails",
+      "upload": "Importer un reçu",
+      "addManual": "Ajouter manuellement"
     },
     "backToCurrent": "Revenir au mois actuel",
     "stats": {
@@ -104,10 +108,10 @@
     "uncategorized": "Non catégorisé",
     "editTitle": "Modifier la dépense",
     "addTitle": "Ajouter une dépense",
-    "viewReceipt": "🧾  Voir le reçu",
+    "viewReceipt": "Voir le reçu",
     "scanningReceipt": "Analyse du reçu…",
-    "scanWithCamera": "📷  Scanner avec l'appareil photo",
-    "fromGallery": "🖼  Depuis la galerie",
+    "scanWithCamera": "Scanner avec l'appareil photo",
+    "fromGallery": "Depuis la galerie",
     "orEnterManually": "OU SAISIR MANUELLEMENT",
     "vendorLabel": "Nom du commerce",
     "vendorPlaceholder": "ex. McDonald's",
@@ -140,7 +144,7 @@
     "newTitle": "Nouvelle catégorie",
     "nameLabel": "Nom",
     "namePlaceholder": "ex. Alimentation",
-    "iconLabel": "Icône (emoji)",
+    "iconLabel": "Icône",
     "colorLabel": "Couleur",
     "budgetLabel": "Budget mensuel (facultatif)",
     "budgetPlaceholder": "ex. 5000",
@@ -156,8 +160,8 @@
   "scan": {
     "title": "Scanner un reçu",
     "subtitle": "Téléversez une photo de reçu et laissez l'IA en extraire les détails",
-    "useCamera": "📷  Utiliser l'appareil photo",
-    "chooseFromGallery": "🖼  Choisir dans la galerie",
+    "useCamera": "Utiliser l'appareil photo",
+    "chooseFromGallery": "Choisir dans la galerie",
     "scanningReceipt": "Analyse du reçu…",
     "reviewTitle": "Vérifier le reçu",
     "saveExpense": "Enregistrer la dépense",
@@ -174,7 +178,12 @@
     "cameraPermissionMessage": "Zingg a besoin d'accéder à la caméra pour scanner les reçus.",
     "cameraPermissionAllow": "Autoriser",
     "cameraPermissionDeniedTitle": "Autorisation refusée",
-    "cameraPermissionDeniedMessage": "L'autorisation de la caméra est nécessaire pour scanner les reçus."
+    "cameraPermissionDeniedMessage": "L'autorisation de la caméra est nécessaire pour scanner les reçus.",
+    "eyebrow": "Scanner de reçus IA",
+    "tip": "Les photos nettes marchent mieux — aplatissez le reçu et évitez les reflets.",
+    "scanningHint": "Extraction du commerçant, du montant et de la date…",
+    "reviewHint": "Vérifiez les détails avant d’enregistrer.",
+    "savedBody": "Ajouté à vos dépenses. Prêt pour le suivant ?"
   },
   "settings": {
     "back": "Retour",
@@ -183,7 +192,7 @@
     "fullNameLabel": "Nom complet",
     "fullNamePlaceholder": "Votre nom",
     "homeCurrencyLabel": "Devise principale",
-    "currencyWarning": "⚠️ Modifier votre devise principale n'affecte que les nouvelles dépenses. Les dépenses existantes conservent leur conversion d'origine.",
+    "currencyWarning": "Modifier votre devise principale n'affecte que les nouvelles dépenses. Les dépenses existantes conservent leur conversion d'origine.",
     "saving": "Enregistrement…",
     "saveChanges": "Enregistrer les modifications",
     "account": "Compte",
@@ -207,6 +216,22 @@
     "restoreSuccess": "Achats restaurés.",
     "restoreNone": "Aucun achat actif trouvé à restaurer.",
     "loadingOffering": "Chargement…",
-    "offeringUnavailable": "Premium n'est pas disponible pour le moment. Veuillez réessayer plus tard."
+    "offeringUnavailable": "Premium n'est pas disponible pour le moment. Veuillez réessayer plus tard.",
+    "upsell": {
+      "eyebrow": "Zingg Premium",
+      "title": "Voyez l'histoire derrière vos dépenses",
+      "body": "Débloquez les récaps IA, des insights plus riches et une expérience sans publicité.",
+      "insightsTitle": "Les récaps IA sont une fonctionnalité Premium",
+      "insightsBody": "Recevez un récit mensuel clair de où est passé votre argent — écrit pour vous, pas un dump de tableur.",
+      "featureRecap": "Récaps mensuels de dépenses par IA",
+      "featureInsights": "Insights vendeurs et tendances plus riches",
+      "featureAdFree": "Suivi sans publicité"
+    }
+  },
+  "legal": {
+    "sectionTitle": "Mentions légales",
+    "privacy": "Politique de confidentialité",
+    "terms": "Conditions d'utilisation",
+    "support": "Contacter le support"
   }
 }

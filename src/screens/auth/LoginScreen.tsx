@@ -7,6 +7,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useTranslation} from 'react-i18next';
 import {AuthStackParamList} from '../../navigation/AuthNavigator';
 import {loginApi} from '../../lib/services/auth.service';
+import {getApiErrorMessage} from '../../lib/api';
 import {useAuth} from '../../contexts/AuthContext';
 
 type Props = {navigation: NativeStackNavigationProp<AuthStackParamList, 'Login'>};
@@ -27,9 +28,8 @@ export default function LoginScreen({navigation}: Props) {
     try {
       const {accessToken, refreshToken, user} = await loginApi(email.trim(), password);
       await login(accessToken, refreshToken, user);
-    } catch (err: any) {
-      const msg = err?.response?.data?.message || t('auth.login.errorFailed');
-      Alert.alert(t('common.error'), Array.isArray(msg) ? msg.join('\n') : msg);
+    } catch (err) {
+      Alert.alert(t('common.error'), getApiErrorMessage(err, t('auth.login.errorFailed')));
     } finally {
       setLoading(false);
     }

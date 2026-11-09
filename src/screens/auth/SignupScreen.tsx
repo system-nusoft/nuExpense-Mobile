@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
 import {
   View, Text, TextInput, TouchableOpacity, Image,
-  StyleSheet, KeyboardAvoidingView, Platform, ScrollView, Alert,
+  StyleSheet, KeyboardAvoidingView, Platform, ScrollView, Alert, Linking,
 } from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useTranslation} from 'react-i18next';
 import {AuthStackParamList} from '../../navigation/AuthNavigator';
+import {PRIVACY_POLICY_URL, TERMS_OF_USE_URL} from '../../constants/legal';
 import {signupApi} from '../../lib/services/auth.service';
+import {getApiErrorMessage} from '../../lib/api';
 
 type Props = {navigation: NativeStackNavigationProp<AuthStackParamList, 'Signup'>};
 
@@ -26,9 +28,8 @@ export default function SignupScreen({navigation}: Props) {
     try {
       await signupApi(name.trim(), email.trim(), password);
       navigation.navigate('VerifyEmail', {email: email.trim()});
-    } catch (err: any) {
-      const msg = err?.response?.data?.message || t('auth.signup.errorFailed');
-      Alert.alert(t('common.error'), Array.isArray(msg) ? msg.join('\n') : msg);
+    } catch (err) {
+      Alert.alert(t('common.error'), getApiErrorMessage(err, t('auth.signup.errorFailed')));
     } finally {
       setLoading(false);
     }
@@ -75,6 +76,17 @@ export default function SignupScreen({navigation}: Props) {
             placeholderTextColor="#9CA3AF"
             secureTextEntry
           />
+          <Text style={styles.legal}>
+            {t('auth.signup.legalPrefix')}{' '}
+            <Text style={styles.legalLink} onPress={() => Linking.openURL(TERMS_OF_USE_URL)}>
+              {t('legal.terms')}
+            </Text>
+            {' '}{t('auth.signup.legalAnd')}{' '}
+            <Text style={styles.legalLink} onPress={() => Linking.openURL(PRIVACY_POLICY_URL)}>
+              {t('legal.privacy')}
+            </Text>
+            .
+          </Text>
           <TouchableOpacity
             style={[styles.button, loading && styles.buttonDisabled]}
             onPress={handleSignup}
@@ -106,6 +118,8 @@ const styles = StyleSheet.create({
     borderRadius: 12, paddingHorizontal: 16, paddingVertical: 12,
     fontSize: 15, color: '#111827', marginBottom: 8,
   },
+  legal: {fontSize: 12, color: '#6B7280', lineHeight: 18, marginBottom: 4, marginTop: 4},
+  legalLink: {color: '#3e6378', fontWeight: '600'},
   button: {
     backgroundColor: '#3e6378', borderRadius: 12,
     paddingVertical: 14, alignItems: 'center', marginTop: 4,

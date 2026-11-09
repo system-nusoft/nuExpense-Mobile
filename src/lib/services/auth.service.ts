@@ -11,8 +11,8 @@ export async function signupApi(name: string, email: string, password: string) {
   return data as {message: string; email: string};
 }
 
-export async function verifyEmailApi(email: string, otp: string) {
-  const {data} = await api.post('/auth/verify-email', {email, otp});
+export async function verifyEmailApi(email: string, code: string) {
+  const {data} = await api.post('/auth/verify-email', {email, code});
   return data as {accessToken: string; refreshToken: string; user: User};
 }
 

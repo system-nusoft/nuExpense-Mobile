@@ -47,7 +47,9 @@
       "haveAccount": "لديك حساب بالفعل؟",
       "signIn": "تسجيل الدخول",
       "errorAllFieldsRequired": "جميع الحقول مطلوبة.",
-      "errorFailed": "فشل التسجيل."
+      "errorFailed": "فشل التسجيل.",
+      "legalPrefix": "بإنشاء حساب، فإنك توافق على",
+      "legalAnd": "و"
     },
     "verifyEmail": {
       "title": "تحقق من بريدك الإلكتروني",
@@ -79,7 +81,9 @@
     "scanCta": {
       "eyebrow": "ماسح الإيصالات بالذكاء الاصطناعي",
       "title": "مسح إيصال",
-      "subtitle": "ارفع صورة، ودع الذكاء الاصطناعي يستخرج التفاصيل"
+      "subtitle": "ارفع صورة، ودع الذكاء الاصطناعي يستخرج التفاصيل",
+      "upload": "رفع إيصال",
+      "addManual": "إضافة يدويًا"
     },
     "backToCurrent": "العودة إلى الشهر الحالي",
     "stats": {
@@ -104,10 +108,10 @@
     "uncategorized": "غير مصنّف",
     "editTitle": "تعديل المصروف",
     "addTitle": "إضافة مصروف",
-    "viewReceipt": "🧾  عرض الإيصال",
+    "viewReceipt": "عرض الإيصال",
     "scanningReceipt": "جارٍ مسح الإيصال…",
-    "scanWithCamera": "📷  مسح بالكاميرا",
-    "fromGallery": "🖼  من المعرض",
+    "scanWithCamera": "مسح بالكاميرا",
+    "fromGallery": "من المعرض",
     "orEnterManually": "أو أدخل يدويًا",
     "vendorLabel": "اسم المتجر",
     "vendorPlaceholder": "مثال: ماكدونالدز",
@@ -140,7 +144,7 @@
     "newTitle": "فئة جديدة",
     "nameLabel": "الاسم",
     "namePlaceholder": "مثال: الطعام والمطاعم",
-    "iconLabel": "الأيقونة (إيموجي)",
+    "iconLabel": "الأيقونة",
     "colorLabel": "اللون",
     "budgetLabel": "الميزانية الشهرية (اختياري)",
     "budgetPlaceholder": "مثال: 5000",
@@ -156,8 +160,8 @@
   "scan": {
     "title": "مسح إيصال",
     "subtitle": "ارفع صورة الإيصال ودع الذكاء الاصطناعي يستخرج التفاصيل",
-    "useCamera": "📷  استخدام الكاميرا",
-    "chooseFromGallery": "🖼  الاختيار من المعرض",
+    "useCamera": "استخدام الكاميرا",
+    "chooseFromGallery": "الاختيار من المعرض",
     "scanningReceipt": "جارٍ مسح الإيصال…",
     "reviewTitle": "مراجعة الإيصال",
     "saveExpense": "حفظ المصروف",
@@ -174,7 +178,12 @@
     "cameraPermissionMessage": "يحتاج Zingg للوصول إلى الكاميرا لمسح الإيصالات.",
     "cameraPermissionAllow": "السماح",
     "cameraPermissionDeniedTitle": "تم رفض الإذن",
-    "cameraPermissionDeniedMessage": "إذن الكاميرا مطلوب لمسح الإيصالات."
+    "cameraPermissionDeniedMessage": "إذن الكاميرا مطلوب لمسح الإيصالات.",
+    "eyebrow": "ماسح إيصالات بالذكاء الاصطناعي",
+    "tip": "الصور الواضحة أفضل — افرد الإيصال وتجنب الوهج.",
+    "scanningHint": "جارٍ استخراج المتجر والمبلغ والتاريخ…",
+    "reviewHint": "راجع التفاصيل قبل الحفظ.",
+    "savedBody": "أُضيف إلى مصروفاتك. جاهز للإيصال التالي؟"
   },
   "settings": {
     "back": "رجوع",
@@ -183,7 +192,7 @@
     "fullNameLabel": "الاسم الكامل",
     "fullNamePlaceholder": "اسمك",
     "homeCurrencyLabel": "العملة الأساسية",
-    "currencyWarning": "⚠️ تغيير عملتك الأساسية يؤثر فقط على المصروفات الجديدة. تحتفظ المصروفات الحالية بتحويلها الأصلي.",
+    "currencyWarning": "تغيير عملتك الأساسية يؤثر فقط على المصروفات الجديدة. تحتفظ المصروفات الحالية بتحويلها الأصلي.",
     "saving": "جارٍ الحفظ…",
     "saveChanges": "حفظ التغييرات",
     "account": "الحساب",
@@ -207,6 +216,22 @@
     "restoreSuccess": "تمت استعادة المشتريات.",
     "restoreNone": "لم يتم العثور على مشتريات نشطة لاستعادتها.",
     "loadingOffering": "جارٍ التحميل…",
-    "offeringUnavailable": "بريميوم غير متاح حاليًا. يرجى المحاولة لاحقًا."
+    "offeringUnavailable": "بريميوم غير متاح حاليًا. يرجى المحاولة لاحقًا.",
+    "upsell": {
+      "eyebrow": "Zingg بريميوم",
+      "title": "اطّلع على القصة وراء إنفاقك",
+      "body": "افتح ملخصات الذكاء الاصطناعي ورؤى أعمق وتجربة خالية من الإعلانات.",
+      "insightsTitle": "ملخصات الذكاء الاصطناعي ميزة بريميوم",
+      "insightsBody": "احصل على سرد شهري واضح لأين ذهب مالك — مكتوب لك، وليس تفريغًا من جدول بيانات.",
+      "featureRecap": "ملخصات إنفاق شهرية بالذكاء الاصطناعي",
+      "featureInsights": "رؤى أعمق للبائعين والاتجاهات",
+      "featureAdFree": "تتبع بدون إعلانات"
+    }
+  },
+  "legal": {
+    "sectionTitle": "قانوني",
+    "privacy": "سياسة الخصوصية",
+    "terms": "شروط الاستخدام",
+    "support": "التواصل مع الدعم"
   }
 }

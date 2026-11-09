@@ -3,6 +3,8 @@
   "displayName": "Zingg",
   "react-native-google-mobile-ads": {
     "android_app_id": "ca-app-pub-1078779997039449~3452590962",
-    "ios_app_id": "ca-app-pub-1078779997039449~9303858451"
+    "ios_app_id": "ca-app-pub-1078779997039449~9303858451",
+    "delay_app_measurement_init": true,
+    "user_tracking_usage_description": "Zingg uses this identifier to show relevant ads to free users. Premium removes ads."
   }
 }

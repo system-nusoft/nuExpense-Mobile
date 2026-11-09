@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useCallback, useRef} from 'react';
-import {useFocusEffect} from '@react-navigation/native';
+import {RouteProp, useFocusEffect, useNavigation, useRoute} from '@react-navigation/native';
 import {
   View, Text, FlatList, TouchableOpacity, StyleSheet,
   ActivityIndicator, Alert, Modal, TextInput, ScrollView, Linking,
@@ -13,7 +13,10 @@ import {useAuth} from '../../contexts/AuthContext';
 import {useLanguage} from '../../contexts/LanguageContext';
 import {getExpensesApi, createExpenseApi, updateExpenseApi, deleteExpenseApi} from '../../lib/services/expenses.service';
 import {getCategoriesApi} from '../../lib/services/categories.service';
-import api from '../../lib/api';
+import CategoryIcon from '../../components/common/CategoryIcon';
+import Icon from '../../components/common/Icon';
+import api, {getApiErrorMessage} from '../../lib/api';
+import {AppTabParamList} from '../../navigation/AppNavigator';
 import {Expense, Category} from '../../types';
 
 function fmt(amount: string | number, currency: string, locale: string) {
@@ -35,6 +38,8 @@ export default function ExpensesScreen() {
   const {language} = useLanguage();
   const {user} = useAuth();
   const insets = useSafeAreaInsets();
+  const route = useRoute<RouteProp<AppTabParamList, 'Expenses'>>();
+  const navigation = useNavigation();
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -67,14 +72,6 @@ export default function ExpensesScreen() {
     getCategoriesApi().then(setCategories).catch(() => {});
   }, []);
 
-  useFocusEffect(
-    useCallback(() => {
-      setPage(1);
-      setLoading(true);
-      loadExpenses(1);
-    }, [loadExpenses]),
-  );
-
   function openAdd() {
     setEditingExpense(null);
     setForm({...EMPTY_FORM, currency: defaultCurrency});
@@ -82,6 +79,19 @@ export default function ExpensesScreen() {
     setScannedReceiptKey(null);
     setModalVisible(true);
   }
+
+  useFocusEffect(
+    useCallback(() => {
+      setPage(1);
+      setLoading(true);
+      loadExpenses(1);
+      if (route.params?.openAdd) {
+        openAdd();
+        navigation.setParams({openAdd: undefined} as never);
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [loadExpenses, route.params?.openAdd]),
+  );
 
   function openEdit(e: Expense) {
     setEditingExpense(e);
@@ -142,9 +152,8 @@ export default function ExpensesScreen() {
         categoryId: data.suggestedCategoryId ?? f.categoryId,
       }));
       setScannedReceiptKey(data.receiptImageKey ?? null);
-    } catch (err: any) {
-      const msg = err?.response?.data?.message || t('expenses.errorScan');
-      Alert.alert(t('expenses.scanFailedTitle'), Array.isArray(msg) ? msg.join('\n') : msg);
+    } catch (err) {
+      Alert.alert(t('expenses.scanFailedTitle'), getApiErrorMessage(err, t('expenses.errorScan')));
       setScannedImageUri(null);
     } finally {
       setScanning(false);
@@ -175,9 +184,8 @@ export default function ExpensesScreen() {
       setPage(1);
       setLoading(true);
       loadExpenses(1);
-    } catch (err: any) {
-      const msg = err?.response?.data?.message || t('expenses.errorSave');
-      Alert.alert(t('common.error'), Array.isArray(msg) ? msg.join('\n') : msg);
+    } catch (err) {
+      Alert.alert(t('common.error'), getApiErrorMessage(err, t('expenses.errorSave')));
     } finally {
       setSaving(false);
     }
@@ -194,8 +202,8 @@ export default function ExpensesScreen() {
             setExpenses(prev => prev.filter(e => e.id !== id));
             setTotal(prev => prev - 1);
             setModalVisible(false);
-          } catch {
-            Alert.alert(t('common.error'), t('expenses.errorDelete'));
+          } catch (err) {
+            Alert.alert(t('common.error'), getApiErrorMessage(err, t('expenses.errorDelete')));
           }
         },
       },
@@ -239,7 +247,12 @@ export default function ExpensesScreen() {
           renderItem={({item}) => (
             <TouchableOpacity style={styles.card} onPress={() => openEdit(item)}>
               <View style={styles.cardLeft}>
-                <Text style={styles.cardIcon}>{item.category?.icon ?? '💸'}</Text>
+                <CategoryIcon
+                  icon={item.category?.icon}
+                  color={item.category?.color || '#3e6378'}
+                  size={18}
+                  badgeSize={36}
+                />
                 <View style={{flex: 1}}>
                   <Text style={styles.cardVendor} numberOfLines={1}>{item.vendor}</Text>
                   <Text style={styles.cardMeta}>
@@ -261,8 +274,8 @@ export default function ExpensesScreen() {
         <View style={styles.modal}>
           <View style={[styles.modalHeader, {paddingTop: insets.top + 12}]}>
             <Text style={styles.modalTitle}>{editingExpense ? t('expenses.editTitle') : t('expenses.addTitle')}</Text>
-            <TouchableOpacity onPress={() => setModalVisible(false)}>
-              <Text style={styles.modalClose}>✕</Text>
+            <TouchableOpacity onPress={() => setModalVisible(false)} hitSlop={8}>
+              <Icon name="x" size={22} color="#6B7280" />
             </TouchableOpacity>
           </View>
           <ScrollView contentContainerStyle={styles.modalBody} keyboardShouldPersistTaps="handled">
@@ -272,6 +285,7 @@ export default function ExpensesScreen() {
               <TouchableOpacity
                 style={styles.receiptBtn}
                 onPress={() => Linking.openURL(editingExpense.receiptImageUrl!)}>
+                <Icon name="file-text" size={16} color="#16A34A" />
                 <Text style={styles.receiptBtnText}>{t('expenses.viewReceipt')}</Text>
               </TouchableOpacity>
             )}
@@ -290,10 +304,16 @@ export default function ExpensesScreen() {
                 ) : (
                   <View style={styles.scanRow}>
                     <TouchableOpacity style={styles.scanBtn} onPress={() => pickAndScan(true)}>
-                      <Text style={styles.scanBtnText}>{t('expenses.scanWithCamera')}</Text>
+                      <View style={styles.scanBtnInner}>
+                        <Icon name="camera" size={16} color="#fff" />
+                        <Text style={styles.scanBtnText}>{t('expenses.scanWithCamera')}</Text>
+                      </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.scanBtnOutline} onPress={() => pickAndScan(false)}>
-                      <Text style={styles.scanBtnOutlineText}>{t('expenses.fromGallery')}</Text>
+                      <View style={styles.scanBtnInner}>
+                        <Icon name="image" size={16} color="#3e6378" />
+                        <Text style={styles.scanBtnOutlineText}>{t('expenses.fromGallery')}</Text>
+                      </View>
                     </TouchableOpacity>
                   </View>
                 )}
@@ -383,8 +403,14 @@ export default function ExpensesScreen() {
                     key={c.id}
                     style={[styles.catChip, form.categoryId === c.id && styles.catChipActive]}
                     onPress={() => setForm(f => ({...f, categoryId: c.id}))}>
+                    <CategoryIcon
+                      icon={c.icon}
+                      color={form.categoryId === c.id ? '#3e6378' : '#6B7280'}
+                      size={14}
+                      withBadge={false}
+                    />
                     <Text style={[styles.catChipText, form.categoryId === c.id && styles.catChipTextActive]}>
-                      {c.icon} {c.name}
+                      {c.name}
                     </Text>
                   </TouchableOpacity>
                 ))}
@@ -430,7 +456,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
   },
   cardLeft: {flexDirection: 'row', alignItems: 'center', gap: 10, flex: 1},
-  cardIcon: {fontSize: 24},
   cardVendor: {fontSize: 14, fontWeight: '600', color: '#111827', maxWidth: 200},
   cardMeta: {fontSize: 12, color: '#9CA3AF', marginTop: 2},
   converted: {fontSize: 11, color: '#9CA3AF', marginTop: 1},
@@ -442,10 +467,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1, borderBottomColor: '#F3F4F6',
   },
   modalTitle: {fontSize: 18, fontWeight: '700', color: '#111827'},
-  modalClose: {fontSize: 18, color: '#6B7280', padding: 4},
   modalBody: {padding: 16, gap: 4, paddingBottom: 40},
   receiptBtn: {
-    flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8,
     backgroundColor: '#F0FDF4', borderWidth: 1, borderColor: '#86EFAC',
     borderRadius: 10, paddingVertical: 10, marginBottom: 16,
   },
@@ -453,6 +477,7 @@ const styles = StyleSheet.create({
   scanPreview: {width: '100%', height: 140, borderRadius: 12, marginBottom: 12},
   scanRow: {flexDirection: 'row', gap: 10, marginBottom: 16},
   scanBtn: {flex: 1, backgroundColor: '#3e6378', borderRadius: 12, paddingVertical: 13, alignItems: 'center'},
+  scanBtnInner: {flexDirection: 'row', alignItems: 'center', gap: 6},
   scanBtnText: {color: '#fff', fontWeight: '600', fontSize: 13},
   scanBtnOutline: {flex: 1, borderWidth: 1.5, borderColor: '#3e6378', borderRadius: 12, paddingVertical: 13, alignItems: 'center'},
   scanBtnOutlineText: {color: '#3e6378', fontWeight: '600', fontSize: 13},
@@ -468,7 +493,7 @@ const styles = StyleSheet.create({
     fontSize: 15, color: '#111827', marginBottom: 12,
   },
   notesInput: {height: 80, textAlignVertical: 'top'},
-  catChip: {paddingHorizontal: 12, paddingVertical: 7, borderRadius: 20, backgroundColor: '#F3F4F6', borderWidth: 1, borderColor: '#E5E7EB'},
+  catChip: {paddingHorizontal: 12, paddingVertical: 7, borderRadius: 20, backgroundColor: '#F3F4F6', borderWidth: 1, borderColor: '#E5E7EB', flexDirection: 'row', alignItems: 'center', gap: 6},
   catChipActive: {backgroundColor: '#eef2f5', borderColor: '#3e6378'},
   catChipText: {fontSize: 13, color: '#374151'},
   catChipTextActive: {color: '#3e6378', fontWeight: '600'},

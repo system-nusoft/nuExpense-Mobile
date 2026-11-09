@@ -3,6 +3,7 @@ import {View, Text, TextInput, TouchableOpacity, Modal, StyleSheet, ActivityIndi
 import {useTranslation} from 'react-i18next';
 import {useAuth} from '../../contexts/AuthContext';
 import {deleteAccountApi} from '../../lib/services/auth.service';
+import {getApiErrorMessage} from '../../lib/api';
 
 interface Props {
   visible: boolean;
@@ -30,8 +31,8 @@ export default function DeleteAccountModal({visible, onClose}: Props) {
       await deleteAccountApi(password);
       // Account is gone server-side; logout clears local tokens and returns to the auth stack.
       await logout();
-    } catch {
-      setError(t('deleteAccount.error'));
+    } catch (err) {
+      setError(getApiErrorMessage(err, t('deleteAccount.error')));
       setLoading(false);
     }
   }

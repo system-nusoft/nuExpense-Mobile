@@ -5,6 +5,7 @@ import {useAuth} from '../contexts/AuthContext';
 import {ActivityIndicator, View} from 'react-native';
 import AuthNavigator from './AuthNavigator';
 import AppNavigator from './AppNavigator';
+import BrandWordmark, {BRAND_NAVY} from '../components/common/BrandWordmark';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,7 +15,8 @@ export default function RootNavigator() {
   if (loading) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff'}}>
-        <ActivityIndicator size="large" color="#3e6378" />
+        <BrandWordmark size="lg" style={{marginBottom: 24}} />
+        <ActivityIndicator size="large" color={BRAND_NAVY} />
       </View>
     );
   }

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {
-  View, Text, TextInput, TouchableOpacity, Image,
+  View, Text, TextInput, TouchableOpacity,
   StyleSheet, KeyboardAvoidingView, Platform, ScrollView, Alert, Linking,
 } from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -9,6 +9,7 @@ import {AuthStackParamList} from '../../navigation/AuthNavigator';
 import {PRIVACY_POLICY_URL, TERMS_OF_USE_URL} from '../../constants/legal';
 import {signupApi} from '../../lib/services/auth.service';
 import {getApiErrorMessage} from '../../lib/api';
+import BrandWordmark from '../../components/common/BrandWordmark';
 
 type Props = {navigation: NativeStackNavigationProp<AuthStackParamList, 'Signup'>};
 
@@ -38,11 +39,7 @@ export default function SignupScreen({navigation}: Props) {
   return (
     <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
-        <Image
-          source={require('../../assets/logo-with-name.png')}
-          style={styles.logo}
-          resizeMode="contain"
-        />
+        <BrandWordmark size="lg" style={styles.logo} />
         <Text style={styles.title}>{t('auth.signup.title')}</Text>
         <Text style={styles.subtitle}>{t('auth.signup.subtitle')}</Text>
 
@@ -108,7 +105,7 @@ export default function SignupScreen({navigation}: Props) {
 const styles = StyleSheet.create({
   flex: {flex: 1, backgroundColor: '#F9FAFB'},
   container: {flexGrow: 1, alignItems: 'center', justifyContent: 'center', padding: 24},
-  logo: {width: 150, height: 100, marginBottom: 4},
+  logo: {marginBottom: 4},
   title: {fontSize: 28, fontWeight: '700', color: '#111827', marginBottom: 4},
   subtitle: {fontSize: 14, color: '#6B7280', marginBottom: 32},
   form: {width: '100%', gap: 8, marginBottom: 24},

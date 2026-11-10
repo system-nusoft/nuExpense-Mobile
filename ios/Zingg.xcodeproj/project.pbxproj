@@ -10,7 +10,10 @@
 		0C80B921A6F3F58F76C31292 /* libPods-Zingg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-Zingg.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
-		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		A1B2C3D40000000000000001 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000011 /* SplashScreen.storyboard */; };
+		A1B2C3D40000000000000002 /* SplashLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000012 /* SplashLogo.png */; };
+		A1B2C3D40000000000000003 /* james.b@example.com in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000013 /* james.b@example.com */; };
+		A1B2C3D40000000000000004 /* oscar.d@example.net in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000014 /* oscar.d@example.net */; };
 		C860B5496A59E52F4C465F9A /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
@@ -23,7 +26,10 @@
 		5709B34CF0A7D63546082F79 /* Pods-Zingg.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zingg.release.xcconfig"; path = "Target Support Files/Pods-Zingg/Pods-Zingg.release.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-Zingg.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Zingg.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Zingg/AppDelegate.swift; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Zingg/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A1B2C3D40000000000000011 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = Zingg/SplashScreen.storyboard; sourceTree = "<group>"; };
+		A1B2C3D40000000000000012 /* SplashLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SplashLogo.png; path = Zingg/SplashLogo.png; sourceTree = "<group>"; };
+		A1B2C3D40000000000000013 /* james.b@example.com */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "james.b@example.com"; path = "Zingg/james.b@example.com"; sourceTree = "<group>"; };
+		A1B2C3D40000000000000014 /* oscar.d@example.net */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "oscar.d@example.net"; path = "Zingg/oscar.d@example.net"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -45,7 +51,10 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				761780EC2CA45674006654EE /* AppDelegate.swift */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
+				A1B2C3D40000000000000011 /* SplashScreen.storyboard */,
+				A1B2C3D40000000000000012 /* SplashLogo.png */,
+				A1B2C3D40000000000000013 /* james.b@example.com */,
+				A1B2C3D40000000000000014 /* oscar.d@example.net */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
 			);
 			name = Zingg;
@@ -159,7 +168,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				A1B2C3D40000000000000001 /* SplashScreen.storyboard in Resources */,
+				A1B2C3D40000000000000002 /* SplashLogo.png in Resources */,
+				A1B2C3D40000000000000003 /* james.b@example.com in Resources */,
+				A1B2C3D40000000000000004 /* oscar.d@example.net in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				C860B5496A59E52F4C465F9A /* PrivacyInfo.xcprivacy in Resources */,
 			);
@@ -274,7 +286,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 89VH93CJ34;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Zingg/Info.plist;
@@ -305,7 +317,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 89VH93CJ34;
 				INFOPLIST_FILE = Zingg/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;

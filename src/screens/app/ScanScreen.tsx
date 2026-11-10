@@ -1,22 +1,33 @@
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   View, Text, TouchableOpacity, StyleSheet,
   Alert, Image, ScrollView, TextInput, ActivityIndicator,
-  Platform, PermissionsAndroid,
+  Platform, AppState,
 } from 'react-native';
 import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
+import {
+  check, openSettings, PERMISSIONS, request, RESULTS,
+} from 'react-native-permissions';
 import {getCategoriesApi} from '../../lib/services/categories.service';
 import {createExpenseApi} from '../../lib/services/expenses.service';
 import {useAuth} from '../../contexts/AuthContext';
 import {useLanguage} from '../../contexts/LanguageContext';
 import CategoryIcon from '../../components/common/CategoryIcon';
+import AiConsentModal from '../../components/common/AiConsentModal';
 import Icon from '../../components/common/Icon';
+import {useAiConsentGate} from '../../hooks/useAiConsentGate';
+import {hasAiConsent} from '../../lib/aiConsent';
 import api, {getApiErrorMessage} from '../../lib/api';
 import {Category} from '../../types';
+
+const CAMERA_PERMISSION = Platform.select({
+  ios: PERMISSIONS.IOS.CAMERA,
+  android: PERMISSIONS.ANDROID.CAMERA,
+})!;
 
 type Step = 'pick' | 'review' | 'done';
 
@@ -42,26 +53,74 @@ export default function ScanScreen() {
   const [draft, setDraft] = useState<ScannedDraft | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [saving, setSaving] = useState(false);
+  const [cameraBlocked, setCameraBlocked] = useState(false);
+  const {
+    aiConsentVisible,
+    runWithAiConsent,
+    onAllowAiConsent,
+    onDenyAiConsent,
+  } = useAiConsentGate();
 
-  async function requestCameraPermission(): Promise<boolean> {
-    if (Platform.OS !== 'android') {return true;}
-    const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.CAMERA,
-      {title: t('scan.cameraPermissionTitle'), message: t('scan.cameraPermissionMessage'), buttonPositive: t('scan.cameraPermissionAllow')},
-    );
-    return granted === PermissionsAndroid.RESULTS.GRANTED;
+  const refreshCameraPermission = useCallback(async () => {
+    try {
+      const status = await check(CAMERA_PERMISSION);
+      if (status === RESULTS.GRANTED || status === RESULTS.LIMITED) {
+        setCameraBlocked(false);
+      }
+    } catch {
+      // Keep current UI state if the check fails.
+    }
+  }, []);
+
+  useEffect(() => {
+    const sub = AppState.addEventListener('change', state => {
+      if (state === 'active') {
+        refreshCameraPermission();
+      }
+    });
+    return () => sub.remove();
+  }, [refreshCameraPermission]);
+
+  async function ensureCameraPermission(): Promise<boolean> {
+    let status = await check(CAMERA_PERMISSION);
+    if (status === RESULTS.GRANTED || status === RESULTS.LIMITED) {
+      setCameraBlocked(false);
+      return true;
+    }
+    if (status === RESULTS.DENIED) {
+      status = await request(CAMERA_PERMISSION);
+      if (status === RESULTS.GRANTED || status === RESULTS.LIMITED) {
+        setCameraBlocked(false);
+        return true;
+      }
+    }
+    setCameraBlocked(true);
+    return false;
   }
 
   async function pickAndScan(fromCamera: boolean) {
     if (fromCamera) {
-      const ok = await requestCameraPermission();
-      if (!ok) {Alert.alert(t('scan.cameraPermissionDeniedTitle'), t('scan.cameraPermissionDeniedMessage')); return;}
+      const ok = await ensureCameraPermission();
+      if (!ok) {return;}
     }
     const result = fromCamera
-      ? await launchCamera({mediaType: 'photo', quality: 0.8})
+      ? await launchCamera({mediaType: 'photo', quality: 0.8, saveToPhotos: false})
       : await launchImageLibrary({mediaType: 'photo', quality: 0.8});
 
+    if (fromCamera && result.didCancel !== true && !result.assets?.[0]) {
+      // Camera often fails silently after a prior "Don't Allow".
+      const status = await check(CAMERA_PERMISSION);
+      if (status !== RESULTS.GRANTED && status !== RESULTS.LIMITED) {
+        setCameraBlocked(true);
+        return;
+      }
+    }
+
     if (!result.assets?.[0]) {return;}
+    if (!(await hasAiConsent())) {
+      Alert.alert(t('aiConsent.requiredTitle'), t('aiConsent.requiredMessage'));
+      return;
+    }
     const asset = result.assets[0];
     setImageUri(asset.uri ?? null);
     setScanning(true);
@@ -317,6 +376,11 @@ export default function ScanScreen() {
   // Pick / scanning
   return (
     <View style={[styles.screen, {paddingTop: insets.top + 12}]}>
+      <AiConsentModal
+        visible={aiConsentVisible}
+        onAllow={onAllowAiConsent}
+        onDeny={onDenyAiConsent}
+      />
       <ScrollView
         contentContainerStyle={[
           styles.pickContent,
@@ -361,19 +425,46 @@ export default function ScanScreen() {
           )}
         </View>
 
-        {!scanning && (
-          <View style={styles.actionStack}>
+        {!scanning && cameraBlocked && (
+          <View style={styles.permissionCard}>
+            <View style={styles.permissionIconWrap}>
+              <Icon name="camera-off" size={22} color="#3e6378" />
+            </View>
+            <Text style={styles.permissionTitle}>{t('scan.cameraNeededTitle')}</Text>
+            <Text style={styles.permissionMessage}>{t('scan.cameraNeededMessage')}</Text>
             <TouchableOpacity
               style={styles.primaryBtn}
-              onPress={() => pickAndScan(true)}
+              onPress={() => openSettings()}
               activeOpacity={0.85}
             >
-              <Icon name="camera" size={18} color="#fff" />
-              <Text style={styles.primaryBtnText}>{t('scan.useCamera')}</Text>
+              <Icon name="settings" size={18} color="#fff" />
+              <Text style={styles.primaryBtnText}>{t('scan.openSettings')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
+              style={styles.ghostBtn}
+              onPress={() => runWithAiConsent(() => { pickAndScan(true); })}
+              activeOpacity={0.85}
+            >
+              <Text style={styles.ghostBtnText}>{t('scan.tryCameraAgain')}</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {!scanning && (
+          <View style={styles.actionStack}>
+            {!cameraBlocked && (
+              <TouchableOpacity
+                style={styles.primaryBtn}
+                onPress={() => runWithAiConsent(() => { pickAndScan(true); })}
+                activeOpacity={0.85}
+              >
+                <Icon name="camera" size={18} color="#fff" />
+                <Text style={styles.primaryBtnText}>{t('scan.useCamera')}</Text>
+              </TouchableOpacity>
+            )}
+            <TouchableOpacity
               style={styles.secondaryBtn}
-              onPress={() => pickAndScan(false)}
+              onPress={() => runWithAiConsent(() => { pickAndScan(false); })}
               activeOpacity={0.85}
             >
               <Icon name="image" size={18} color="#1A2F3A" />
@@ -522,6 +613,39 @@ const styles = StyleSheet.create({
     fontSize: 13,
     textAlign: 'center',
     lineHeight: 18,
+  },
+
+  permissionCard: {
+    backgroundColor: '#fff',
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: '#E8EEF2',
+    padding: 18,
+    marginBottom: 14,
+    alignItems: 'center',
+    gap: 8,
+  },
+  permissionIconWrap: {
+    width: 48,
+    height: 48,
+    borderRadius: 16,
+    backgroundColor: '#EEF4F7',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 4,
+  },
+  permissionTitle: {
+    fontSize: 17,
+    fontWeight: '700',
+    color: '#1A2F3A',
+    textAlign: 'center',
+  },
+  permissionMessage: {
+    fontSize: 14,
+    lineHeight: 20,
+    color: '#5B6B75',
+    textAlign: 'center',
+    marginBottom: 8,
   },
 
   actionStack: {gap: 10},

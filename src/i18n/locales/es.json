@@ -179,6 +179,10 @@
     "cameraPermissionAllow": "Permitir",
     "cameraPermissionDeniedTitle": "Permiso denegado",
     "cameraPermissionDeniedMessage": "Se requiere permiso de cámara para escanear recibos.",
+    "cameraNeededTitle": "Se necesita acceso a la cámara",
+    "cameraNeededMessage": "Permite el acceso a la cámara en Ajustes para fotografiar recibos. También puedes elegir una foto de la galería.",
+    "openSettings": "Abrir Ajustes",
+    "tryCameraAgain": "Probar cámara de nuevo",
     "eyebrow": "Escáner de recibos con IA",
     "tip": "Las fotos nítidas funcionan mejor — aplana el recibo y evita reflejos.",
     "scanningHint": "Extrayendo comercio, importe y fecha…",
@@ -233,5 +237,23 @@
     "privacy": "Política de privacidad",
     "terms": "Términos de uso",
     "support": "Contactar soporte"
+  },
+  "aiConsent": {
+    "title": "¿Permitir el procesamiento con IA?",
+    "body": "Para escanear recibos y generar resúmenes de gastos, Zingg comparte datos personales con {{provider}}, un servicio de IA de terceros.",
+    "bulletReceipts": "Fotos de recibos que eliges escanear o subir",
+    "bulletExpenses": "Detalles de gastos (comercio, importe, categoría, fecha) usados para resúmenes mensuales con IA",
+    "purpose": "Los datos se envían solo para estas funciones. {{provider}} los procesa según su propia política de privacidad. Puedes retirar el permiso en cualquier momento en Ajustes.",
+    "privacyLink": "Leer la Política de privacidad de Zingg",
+    "providerPrivacyLink": "Leer la Política de privacidad de {{provider}}",
+    "allow": "Permitir",
+    "deny": "No permitir",
+    "footnote": "Aún puedes añadir gastos manualmente sin procesamiento de IA.",
+    "settingsTitle": "Procesamiento con IA",
+    "settingsSubtitle": "Compartir fotos de recibos y detalles de gastos con {{provider}} para escaneo y resúmenes",
+    "enabled": "Permitido",
+    "disabled": "No permitido",
+    "requiredTitle": "Se requiere permiso de IA",
+    "requiredMessage": "Permite el procesamiento con IA en Ajustes para usar el escaneo de recibos y los resúmenes con IA."
   }
 }

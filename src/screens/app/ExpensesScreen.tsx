@@ -13,8 +13,11 @@ import {useAuth} from '../../contexts/AuthContext';
 import {useLanguage} from '../../contexts/LanguageContext';
 import {getExpensesApi, createExpenseApi, updateExpenseApi, deleteExpenseApi} from '../../lib/services/expenses.service';
 import {getCategoriesApi} from '../../lib/services/categories.service';
+import AiConsentModal from '../../components/common/AiConsentModal';
 import CategoryIcon from '../../components/common/CategoryIcon';
 import Icon from '../../components/common/Icon';
+import {useAiConsentGate} from '../../hooks/useAiConsentGate';
+import {hasAiConsent} from '../../lib/aiConsent';
 import api, {getApiErrorMessage} from '../../lib/api';
 import {AppTabParamList} from '../../navigation/AppNavigator';
 import {Expense, Category} from '../../types';
@@ -48,6 +51,12 @@ export default function ExpensesScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [editingExpense, setEditingExpense] = useState<Expense | null>(null);
   const [form, setForm] = useState(EMPTY_FORM);
+  const {
+    aiConsentVisible,
+    runWithAiConsent,
+    onAllowAiConsent,
+    onDenyAiConsent,
+  } = useAiConsentGate();
   const [saving, setSaving] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [scanning, setScanning] = useState(false);
@@ -127,6 +136,10 @@ export default function ExpensesScreen() {
       : await launchImageLibrary({mediaType: 'photo', quality: 0.8});
 
     if (!result.assets?.[0]) {return;}
+    if (!(await hasAiConsent())) {
+      Alert.alert(t('aiConsent.requiredTitle'), t('aiConsent.requiredMessage'));
+      return;
+    }
     const asset = result.assets[0];
     setScannedImageUri(asset.uri ?? null);
     setScanning(true);
@@ -303,13 +316,19 @@ export default function ExpensesScreen() {
                   </View>
                 ) : (
                   <View style={styles.scanRow}>
-                    <TouchableOpacity style={styles.scanBtn} onPress={() => pickAndScan(true)}>
+                    <TouchableOpacity
+                      style={styles.scanBtn}
+                      onPress={() => runWithAiConsent(() => { pickAndScan(true); })}
+                    >
                       <View style={styles.scanBtnInner}>
                         <Icon name="camera" size={16} color="#fff" />
                         <Text style={styles.scanBtnText}>{t('expenses.scanWithCamera')}</Text>
                       </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.scanBtnOutline} onPress={() => pickAndScan(false)}>
+                    <TouchableOpacity
+                      style={styles.scanBtnOutline}
+                      onPress={() => runWithAiConsent(() => { pickAndScan(false); })}
+                    >
                       <View style={styles.scanBtnInner}>
                         <Icon name="image" size={16} color="#3e6378" />
                         <Text style={styles.scanBtnOutlineText}>{t('expenses.fromGallery')}</Text>
@@ -434,6 +453,11 @@ export default function ExpensesScreen() {
           </ScrollView>
         </View>
       </Modal>
+      <AiConsentModal
+        visible={aiConsentVisible}
+        onAllow={onAllowAiConsent}
+        onDeny={onDenyAiConsent}
+      />
     </View>
   );
 }

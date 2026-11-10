@@ -179,6 +179,10 @@
     "cameraPermissionAllow": "允许",
     "cameraPermissionDeniedTitle": "权限被拒绝",
     "cameraPermissionDeniedMessage": "扫描收据需要相机权限。",
+    "cameraNeededTitle": "需要相机权限",
+    "cameraNeededMessage": "请在设置中允许相机权限以拍摄收据。你也可以从图库选择照片。",
+    "openSettings": "打开设置",
+    "tryCameraAgain": "再次尝试相机",
     "eyebrow": "AI 收据扫描",
     "tip": "清晰照片效果更好 — 展平收据并避免反光。",
     "scanningHint": "正在提取商家、金额与日期…",
@@ -233,5 +237,23 @@
     "privacy": "隐私政策",
     "terms": "使用条款",
     "support": "联系支持"
+  },
+  "aiConsent": {
+    "title": "允许 AI 处理？",
+    "body": "为扫描收据并生成支出摘要，Zingg 会与第三方 AI 服务 {{provider}} 共享个人数据。",
+    "bulletReceipts": "您选择扫描或上传的收据照片",
+    "bulletExpenses": "用于 AI 月度摘要的支出详情（商家、金额、分类、日期）",
+    "purpose": "数据仅用于这些功能。{{provider}} 按其自身隐私政策处理数据。您可随时在设置中撤回许可。",
+    "privacyLink": "阅读 Zingg 隐私政策",
+    "providerPrivacyLink": "阅读 {{provider}} 隐私政策",
+    "allow": "允许",
+    "deny": "不允许",
+    "footnote": "您仍可手动添加支出，无需 AI 处理。",
+    "settingsTitle": "AI 处理",
+    "settingsSubtitle": "与 {{provider}} 共享收据照片和支出详情，用于扫描与摘要",
+    "enabled": "已允许",
+    "disabled": "未允许",
+    "requiredTitle": "需要 AI 许可",
+    "requiredMessage": "请在设置中允许 AI 处理，以使用收据扫描和 AI 摘要。"
   }
 }

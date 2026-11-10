@@ -179,6 +179,10 @@
     "cameraPermissionAllow": "Permitir",
     "cameraPermissionDeniedTitle": "Permissão negada",
     "cameraPermissionDeniedMessage": "A permissão da câmera é necessária para escanear recibos.",
+    "cameraNeededTitle": "Acesso à câmera necessário",
+    "cameraNeededMessage": "Permita o acesso à câmera em Ajustes para fotografar recibos. Você ainda pode escolher uma foto da galeria.",
+    "openSettings": "Abrir Ajustes",
+    "tryCameraAgain": "Tentar câmera novamente",
     "eyebrow": "Scanner de recibos com IA",
     "tip": "Fotos nítidas funcionam melhor — abra o recibo e evite reflexos.",
     "scanningHint": "Extraindo estabelecimento, valor e data…",
@@ -233,5 +237,23 @@
     "privacy": "Política de Privacidade",
     "terms": "Termos de Uso",
     "support": "Falar com o suporte"
+  },
+  "aiConsent": {
+    "title": "Permitir processamento por IA?",
+    "body": "Para escanear recibos e gerar resumos de gastos, o Zingg partilha dados pessoais com a {{provider}}, um serviço de IA de terceiros.",
+    "bulletReceipts": "Fotos de recibos que escolhe escanear ou carregar",
+    "bulletExpenses": "Detalhes de despesas (comerciante, valor, categoria, data) usados nos resumos mensais com IA",
+    "purpose": "Os dados são enviados apenas para estas funcionalidades. A {{provider}} processa-os segundo a sua própria política de privacidade. Pode retirar a permissão a qualquer momento em Definições.",
+    "privacyLink": "Ler a Política de Privacidade do Zingg",
+    "providerPrivacyLink": "Ler a Política de Privacidade da {{provider}}",
+    "allow": "Permitir",
+    "deny": "Não permitir",
+    "footnote": "Ainda pode adicionar despesas manualmente sem processamento por IA.",
+    "settingsTitle": "Processamento por IA",
+    "settingsSubtitle": "Partilhar fotos de recibos e detalhes de despesas com a {{provider}} para digitalização e resumos",
+    "enabled": "Permitido",
+    "disabled": "Não permitido",
+    "requiredTitle": "Permissão de IA necessária",
+    "requiredMessage": "Permita o processamento por IA em Definições para usar a digitalização de recibos e os resumos com IA."
   }
 }

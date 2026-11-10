@@ -179,6 +179,10 @@
     "cameraPermissionAllow": "Autoriser",
     "cameraPermissionDeniedTitle": "Autorisation refusée",
     "cameraPermissionDeniedMessage": "L'autorisation de la caméra est nécessaire pour scanner les reçus.",
+    "cameraNeededTitle": "Accès à la caméra requis",
+    "cameraNeededMessage": "Autorisez l'accès à la caméra dans Réglages pour photographier vos reçus. Vous pouvez aussi choisir une photo dans la galerie.",
+    "openSettings": "Ouvrir Réglages",
+    "tryCameraAgain": "Réessayer la caméra",
     "eyebrow": "Scanner de reçus IA",
     "tip": "Les photos nettes marchent mieux — aplatissez le reçu et évitez les reflets.",
     "scanningHint": "Extraction du commerçant, du montant et de la date…",
@@ -233,5 +237,23 @@
     "privacy": "Politique de confidentialité",
     "terms": "Conditions d'utilisation",
     "support": "Contacter le support"
+  },
+  "aiConsent": {
+    "title": "Autoriser le traitement par IA ?",
+    "body": "Pour scanner les reçus et générer des bilans de dépenses, Zingg partage des données personnelles avec {{provider}}, un service d’IA tiers.",
+    "bulletReceipts": "Photos de reçus que vous choisissez de scanner ou d’importer",
+    "bulletExpenses": "Détails des dépenses (commerçant, montant, catégorie, date) utilisés pour les bilans mensuels IA",
+    "purpose": "Les données sont envoyées uniquement pour ces fonctionnalités. {{provider}} les traite selon sa propre politique de confidentialité. Vous pouvez retirer l’autorisation à tout moment dans Réglages.",
+    "privacyLink": "Lire la Politique de confidentialité de Zingg",
+    "providerPrivacyLink": "Lire la Politique de confidentialité de {{provider}}",
+    "allow": "Autoriser",
+    "deny": "Ne pas autoriser",
+    "footnote": "Vous pouvez toujours ajouter des dépenses manuellement sans traitement par IA.",
+    "settingsTitle": "Traitement par IA",
+    "settingsSubtitle": "Partager les photos de reçus et les détails de dépenses avec {{provider}} pour le scan et les bilans",
+    "enabled": "Autorisé",
+    "disabled": "Non autorisé",
+    "requiredTitle": "Autorisation IA requise",
+    "requiredMessage": "Autorisez le traitement par IA dans Réglages pour utiliser le scan de reçus et les bilans IA."
   }
 }

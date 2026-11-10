@@ -1,19 +1,22 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   View, Text, TextInput, TouchableOpacity,
-  StyleSheet, Alert, ScrollView, KeyboardAvoidingView, Platform, I18nManager, Linking,
+  StyleSheet, Alert, ScrollView, KeyboardAvoidingView, Platform, I18nManager, Linking, Switch,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useTranslation} from 'react-i18next';
 import type {CustomerInfo, PurchasesOffering} from 'react-native-purchases';
 import {useAuth} from '../../contexts/AuthContext';
 import {
+  AI_DATA_PROCESSOR_NAME,
   PRIVACY_POLICY_URL,
   SUPPORT_EMAIL,
   TERMS_OF_USE_URL,
 } from '../../constants/legal';
+import {getAiConsentStatus, setAiConsent} from '../../lib/aiConsent';
 import api, {getApiErrorMessage} from '../../lib/api';
+import AiConsentModal from '../../components/common/AiConsentModal';
 import Icon from '../../components/common/Icon';
 import LanguagePicker from '../../components/common/LanguagePicker';
 import {
@@ -32,10 +35,24 @@ export default function SettingsScreen() {
   const insets = useSafeAreaInsets();
   const {user, logout, refreshUser} = useAuth();
   const [showDelete, setShowDelete] = useState(false);
+  const [showAiConsent, setShowAiConsent] = useState(false);
+  const [aiConsentGranted, setAiConsentGranted] = useState(false);
   const [name, setName] = useState(user?.name ?? '');
   const [currency, setCurrency] = useState(user?.homeCurrency ?? 'USD');
   const [saving, setSaving] = useState(false);
   const currencyChanged = currency.toUpperCase() !== user?.homeCurrency;
+
+  const refreshAiConsent = useCallback(() => {
+    getAiConsentStatus().then(status => {
+      setAiConsentGranted(status === 'granted');
+    });
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      refreshAiConsent();
+    }, [refreshAiConsent]),
+  );
 
   const [customerInfo, setCustomerInfo] = useState<CustomerInfo | null>(null);
   const [offering, setOffering] = useState<PurchasesOffering | null>(null);
@@ -218,6 +235,32 @@ export default function SettingsScreen() {
         </View>
 
         <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('aiConsent.settingsTitle')}</Text>
+          <View style={styles.aiRow}>
+            <View style={styles.aiCopy}>
+              <Text style={styles.legalRowText}>
+                {t('aiConsent.settingsSubtitle', {provider: AI_DATA_PROCESSOR_NAME})}
+              </Text>
+              <Text style={styles.aiStatus}>
+                {aiConsentGranted ? t('aiConsent.enabled') : t('aiConsent.disabled')}
+              </Text>
+            </View>
+            <Switch
+              value={aiConsentGranted}
+              onValueChange={next => {
+                if (next) {
+                  setShowAiConsent(true);
+                  return;
+                }
+                setAiConsent('denied').then(() => setAiConsentGranted(false));
+              }}
+              trackColor={{false: '#D1D5DB', true: '#81a8c0'}}
+              thumbColor={aiConsentGranted ? '#3e6378' : '#f4f3f4'}
+            />
+          </View>
+        </View>
+
+        <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('legal.sectionTitle')}</Text>
           <TouchableOpacity style={[styles.legalRow, styles.legalRowFirst]} onPress={() => Linking.openURL(PRIVACY_POLICY_URL)}>
             <Text style={styles.legalRowText}>{t('legal.privacy')}</Text>
@@ -245,6 +288,19 @@ export default function SettingsScreen() {
         <Text style={styles.deleteAccountHint}>{t('deleteAccount.body')}</Text>
       </ScrollView>
       <DeleteAccountModal visible={showDelete} onClose={() => setShowDelete(false)} />
+      <AiConsentModal
+        visible={showAiConsent}
+        onAllow={async () => {
+          await setAiConsent('granted');
+          setAiConsentGranted(true);
+          setShowAiConsent(false);
+        }}
+        onDeny={async () => {
+          await setAiConsent('denied');
+          setAiConsentGranted(false);
+          setShowAiConsent(false);
+        }}
+      />
     </KeyboardAvoidingView>
   );
 }
@@ -257,6 +313,19 @@ const styles = StyleSheet.create({
   backText: {fontSize: 16, color: '#3e6378', fontWeight: '500'},
   title: {fontSize: 17, fontWeight: '700', color: '#111827'},
   content: {padding: 16, gap: 16, paddingBottom: 40},
+  aiRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 14,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+  },
+  aiCopy: {flex: 1, gap: 4},
+  aiStatus: {fontSize: 12, color: '#6B7280', fontWeight: '600'},
   section: {backgroundColor: '#fff', borderRadius: 16, padding: 16, gap: 4},
   sectionTitle: {fontSize: 13, fontWeight: '600', color: '#6B7280', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 8},
   label: {fontSize: 13, fontWeight: '600', color: '#374151', marginBottom: 4},

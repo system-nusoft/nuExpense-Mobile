@@ -16,6 +16,7 @@ prepare_react_native_project!
 # Only enable the iOS permission pods we actually request at runtime.
 setup_permissions([
   'AppTrackingTransparency',
+  'Camera',
 ])
 
 linkage = ENV['USE_FRAMEWORKS']

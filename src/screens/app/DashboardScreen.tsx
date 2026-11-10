@@ -17,9 +17,11 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuth } from '../../contexts/AuthContext';
 import { useLanguage } from '../../contexts/LanguageContext';
+import AiConsentModal from '../../components/common/AiConsentModal';
 import CategoryIcon from '../../components/common/CategoryIcon';
 import Icon from '../../components/common/Icon';
 import PremiumUpsellCard from '../../components/common/PremiumUpsellCard';
+import { useAiConsentGate } from '../../hooks/useAiConsentGate';
 import { getApiErrorMessage } from '../../lib/api';
 import {
   getCategorySummaryApi,
@@ -92,6 +94,12 @@ export default function DashboardScreen() {
   const [categoryLoading, setCategoryLoading] = useState(true);
   const [recap, setRecap] = useState('');
   const [recapLoading, setRecapLoading] = useState(false);
+  const {
+    aiConsentVisible,
+    runWithAiConsent,
+    onAllowAiConsent,
+    onDenyAiConsent,
+  } = useAiConsentGate();
 
   function fmt(amount: number) {
     return new Intl.NumberFormat(language, {
@@ -126,17 +134,21 @@ export default function DashboardScreen() {
   }, [selectedMonth, loadCategories]);
 
   async function handleGenerateRecap() {
-    setRecapLoading(true);
-    try {
-      const { recap: text } = await getMonthlyRecapApi(selectedMonth);
-      setRecap(text);
-    } catch (e) {
-      const msg = getApiErrorMessage(e, t('dashboard.errorRecap'));
-      setRecap('');
-      Alert.alert(t('common.error'), msg);
-    } finally {
-      setRecapLoading(false);
-    }
+    runWithAiConsent(() => {
+      void (async () => {
+        setRecapLoading(true);
+        try {
+          const { recap: text } = await getMonthlyRecapApi(selectedMonth);
+          setRecap(text);
+        } catch (e) {
+          const msg = getApiErrorMessage(e, t('dashboard.errorRecap'));
+          setRecap('');
+          Alert.alert(t('common.error'), msg);
+        } finally {
+          setRecapLoading(false);
+        }
+      })();
+    });
   }
 
   const isPremium = user?.isPremium ?? false;
@@ -148,6 +160,7 @@ export default function DashboardScreen() {
   const maxBar = Math.max(...monthlySummary.map(m => m.total), 1);
 
   return (
+    <View style={styles.container}>
     <ScrollView
       style={styles.container}
       contentContainerStyle={[styles.content, { paddingTop: insets.top + 16 }]}
@@ -475,6 +488,12 @@ export default function DashboardScreen() {
           </View>
         ))}
     </ScrollView>
+      <AiConsentModal
+        visible={aiConsentVisible}
+        onAllow={onAllowAiConsent}
+        onDeny={onDenyAiConsent}
+      />
+    </View>
   );
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import {createBottomTabNavigator, BottomTabBar} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import DashboardScreen from '../screens/app/DashboardScreen';
 import ExpensesScreen from '../screens/app/ExpensesScreen';
@@ -9,13 +9,14 @@ import ScanScreen from '../screens/app/ScanScreen';
 import CategoriesScreen from '../screens/app/CategoriesScreen';
 import SettingsScreen from '../screens/app/SettingsScreen';
 import AdBanner from '../components/common/AdBanner';
+import Icon, {IconName} from '../components/common/Icon';
 
 // Ads only appear on these tabs - never in the scan flow or category editing.
 const AD_TABS = ['Dashboard', 'Expenses'];
 
 export type AppTabParamList = {
   Dashboard: undefined;
-  Expenses: undefined;
+  Expenses: {openAdd?: boolean} | undefined;
   Scan: undefined;
   Categories: undefined;
 };
@@ -28,19 +29,12 @@ export type AppStackParamList = {
 const Tab = createBottomTabNavigator<AppTabParamList>();
 const Stack = createNativeStackNavigator<AppStackParamList>();
 
-function TabIcon({name, focused}: {name: string; focused: boolean}) {
-  const icons: Record<string, string> = {
-    Dashboard: '◫',
-    Expenses: '₿',
-    Scan: '⊡',
-    Categories: '⊞',
-  };
-  return (
-    <Text style={{fontSize: 20, color: focused ? '#3e6378' : '#9CA3AF'}}>
-      {icons[name] ?? '●'}
-    </Text>
-  );
-}
+const TAB_ICONS: Record<keyof AppTabParamList, IconName> = {
+  Dashboard: 'home',
+  Expenses: 'credit-card',
+  Scan: 'camera',
+  Categories: 'layers',
+};
 
 function TabsScreen() {
   const {t} = useTranslation();
@@ -63,8 +57,12 @@ function TabsScreen() {
           height: 60,
         },
         tabBarLabelStyle: {fontSize: 11, fontWeight: '600'},
-        tabBarIcon: ({focused}) => (
-          <TabIcon name={route.name} focused={focused} />
+        tabBarIcon: ({focused, color}) => (
+          <Icon
+            name={TAB_ICONS[route.name]}
+            size={focused ? 22 : 20}
+            color={color}
+          />
         ),
       })}>
       <Tab.Screen name="Dashboard" component={DashboardScreen} options={{tabBarLabel: t('nav.dashboard')}} />

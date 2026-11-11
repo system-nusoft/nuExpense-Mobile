@@ -47,7 +47,9 @@
       "haveAccount": "¿Ya tienes una cuenta?",
       "signIn": "Iniciar sesión",
       "errorAllFieldsRequired": "Todos los campos son obligatorios.",
-      "errorFailed": "Error al registrarse."
+      "errorFailed": "Error al registrarse.",
+      "legalPrefix": "Al crear una cuenta, aceptas nuestros",
+      "legalAnd": "y"
     },
     "verifyEmail": {
       "title": "Revisa tu correo",
@@ -79,7 +81,9 @@
     "scanCta": {
       "eyebrow": "Escáner de recibos con IA",
       "title": "Escanear un recibo",
-      "subtitle": "Sube una foto y deja que la IA extraiga los detalles"
+      "subtitle": "Sube una foto y deja que la IA extraiga los detalles",
+      "upload": "Subir recibo",
+      "addManual": "Añadir manualmente"
     },
     "backToCurrent": "Volver al mes actual",
     "stats": {
@@ -104,10 +108,10 @@
     "uncategorized": "Sin categorizar",
     "editTitle": "Editar gasto",
     "addTitle": "Añadir gasto",
-    "viewReceipt": "🧾  Ver recibo",
+    "viewReceipt": "Ver recibo",
     "scanningReceipt": "Escaneando recibo…",
-    "scanWithCamera": "📷  Escanear con cámara",
-    "fromGallery": "🖼  Desde galería",
+    "scanWithCamera": "Escanear con cámara",
+    "fromGallery": "Desde galería",
     "orEnterManually": "O INGRESA MANUALMENTE",
     "vendorLabel": "Nombre del comercio",
     "vendorPlaceholder": "ej. McDonald's",
@@ -140,7 +144,7 @@
     "newTitle": "Nueva categoría",
     "nameLabel": "Nombre",
     "namePlaceholder": "ej. Comida y restaurantes",
-    "iconLabel": "Icono (emoji)",
+    "iconLabel": "Icono",
     "colorLabel": "Color",
     "budgetLabel": "Presupuesto mensual (opcional)",
     "budgetPlaceholder": "ej. 5000",
@@ -156,8 +160,8 @@
   "scan": {
     "title": "Escanear recibo",
     "subtitle": "Sube una foto del recibo y deja que la IA extraiga los detalles",
-    "useCamera": "📷  Usar cámara",
-    "chooseFromGallery": "🖼  Elegir de la galería",
+    "useCamera": "Usar cámara",
+    "chooseFromGallery": "Elegir de la galería",
     "scanningReceipt": "Escaneando recibo…",
     "reviewTitle": "Revisar recibo",
     "saveExpense": "Guardar gasto",
@@ -174,7 +178,16 @@
     "cameraPermissionMessage": "Zingg necesita acceso a la cámara para escanear recibos.",
     "cameraPermissionAllow": "Permitir",
     "cameraPermissionDeniedTitle": "Permiso denegado",
-    "cameraPermissionDeniedMessage": "Se requiere permiso de cámara para escanear recibos."
+    "cameraPermissionDeniedMessage": "Se requiere permiso de cámara para escanear recibos.",
+    "cameraNeededTitle": "Se necesita acceso a la cámara",
+    "cameraNeededMessage": "Permite el acceso a la cámara en Ajustes para fotografiar recibos. También puedes elegir una foto de la galería.",
+    "openSettings": "Abrir Ajustes",
+    "tryCameraAgain": "Probar cámara de nuevo",
+    "eyebrow": "Escáner de recibos con IA",
+    "tip": "Las fotos nítidas funcionan mejor — aplana el recibo y evita reflejos.",
+    "scanningHint": "Extrayendo comercio, importe y fecha…",
+    "reviewHint": "Confirma los datos antes de guardar.",
+    "savedBody": "Añadido a tus gastos. ¿Listo para el siguiente?"
   },
   "settings": {
     "back": "Atrás",
@@ -183,7 +196,7 @@
     "fullNameLabel": "Nombre completo",
     "fullNamePlaceholder": "Tu nombre",
     "homeCurrencyLabel": "Moneda principal",
-    "currencyWarning": "⚠️ Cambiar tu moneda principal solo afecta a los gastos nuevos. Los gastos existentes conservan su conversión original.",
+    "currencyWarning": "Cambiar tu moneda principal solo afecta a los gastos nuevos. Los gastos existentes conservan su conversión original.",
     "saving": "Guardando…",
     "saveChanges": "Guardar cambios",
     "account": "Cuenta",
@@ -207,6 +220,40 @@
     "restoreSuccess": "Compras restauradas.",
     "restoreNone": "No se encontraron compras activas para restaurar.",
     "loadingOffering": "Cargando…",
-    "offeringUnavailable": "Premium no está disponible en este momento. Inténtalo de nuevo más tarde."
+    "offeringUnavailable": "Premium no está disponible en este momento. Inténtalo de nuevo más tarde.",
+    "upsell": {
+      "eyebrow": "Zingg Premium",
+      "title": "Ve la historia detrás de tus gastos",
+      "body": "Desbloquea resúmenes con IA, insights más profundos y una experiencia sin anuncios.",
+      "insightsTitle": "Los resúmenes con IA son Premium",
+      "insightsBody": "Obtén una narrativa mensual clara de a dónde fue tu dinero — escrita para ti, no un volcado de hoja de cálculo.",
+      "featureRecap": "Resúmenes mensuales de gastos con IA",
+      "featureInsights": "Insights de comercios y tendencias",
+      "featureAdFree": "Seguimiento sin anuncios"
+    }
+  },
+  "legal": {
+    "sectionTitle": "Legal",
+    "privacy": "Política de privacidad",
+    "terms": "Términos de uso",
+    "support": "Contactar soporte"
+  },
+  "aiConsent": {
+    "title": "¿Permitir el procesamiento con IA?",
+    "body": "Para escanear recibos y generar resúmenes de gastos, Zingg comparte datos personales con {{provider}}, un servicio de IA de terceros.",
+    "bulletReceipts": "Fotos de recibos que eliges escanear o subir",
+    "bulletExpenses": "Detalles de gastos (comercio, importe, categoría, fecha) usados para resúmenes mensuales con IA",
+    "purpose": "Los datos se envían solo para estas funciones. {{provider}} los procesa según su propia política de privacidad. Puedes retirar el permiso en cualquier momento en Ajustes.",
+    "privacyLink": "Leer la Política de privacidad de Zingg",
+    "providerPrivacyLink": "Leer la Política de privacidad de {{provider}}",
+    "allow": "Permitir",
+    "deny": "No permitir",
+    "footnote": "Aún puedes añadir gastos manualmente sin procesamiento de IA.",
+    "settingsTitle": "Procesamiento con IA",
+    "settingsSubtitle": "Compartir fotos de recibos y detalles de gastos con {{provider}} para escaneo y resúmenes",
+    "enabled": "Permitido",
+    "disabled": "No permitido",
+    "requiredTitle": "Se requiere permiso de IA",
+    "requiredMessage": "Permite el procesamiento con IA en Ajustes para usar el escaneo de recibos y los resúmenes con IA."
   }
 }

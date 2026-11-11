@@ -47,7 +47,9 @@
       "haveAccount": "Already have an account?",
       "signIn": "Sign in",
       "errorAllFieldsRequired": "All fields are required.",
-      "errorFailed": "Signup failed."
+      "errorFailed": "Signup failed.",
+      "legalPrefix": "By creating an account, you agree to our",
+      "legalAnd": "and"
     },
     "verifyEmail": {
       "title": "Check your email",
@@ -79,7 +81,9 @@
     "scanCta": {
       "eyebrow": "AI Receipt Scanner",
       "title": "Scan a Receipt",
-      "subtitle": "Upload a photo, let AI extract the details"
+      "subtitle": "Upload a photo, let AI extract the details",
+      "upload": "Upload receipt",
+      "addManual": "Add manually"
     },
     "backToCurrent": "Back to current",
     "stats": {
@@ -104,10 +108,10 @@
     "uncategorized": "Uncategorized",
     "editTitle": "Edit Expense",
     "addTitle": "Add Expense",
-    "viewReceipt": "🧾  View Receipt",
+    "viewReceipt": "View Receipt",
     "scanningReceipt": "Scanning receipt…",
-    "scanWithCamera": "📷  Scan with Camera",
-    "fromGallery": "🖼  From Gallery",
+    "scanWithCamera": "Scan with Camera",
+    "fromGallery": "From Gallery",
     "orEnterManually": "OR ENTER MANUALLY",
     "vendorLabel": "Shop / Vendor Name",
     "vendorPlaceholder": "e.g. McDonald's",
@@ -140,7 +144,7 @@
     "newTitle": "New Category",
     "nameLabel": "Name",
     "namePlaceholder": "e.g. Food & Dining",
-    "iconLabel": "Icon (emoji)",
+    "iconLabel": "Icon",
     "colorLabel": "Color",
     "budgetLabel": "Monthly Budget (optional)",
     "budgetPlaceholder": "e.g. 5000",
@@ -156,8 +160,8 @@
   "scan": {
     "title": "Scan Receipt",
     "subtitle": "Upload a receipt photo and let AI extract the details",
-    "useCamera": "📷  Use Camera",
-    "chooseFromGallery": "🖼  Choose from Gallery",
+    "useCamera": "Use Camera",
+    "chooseFromGallery": "Choose from Gallery",
     "scanningReceipt": "Scanning receipt…",
     "reviewTitle": "Review Receipt",
     "saveExpense": "Save Expense",
@@ -174,7 +178,16 @@
     "cameraPermissionMessage": "Zingg needs camera access to scan receipts.",
     "cameraPermissionAllow": "Allow",
     "cameraPermissionDeniedTitle": "Permission denied",
-    "cameraPermissionDeniedMessage": "Camera permission is required to scan receipts."
+    "cameraPermissionDeniedMessage": "Camera permission is required to scan receipts.",
+    "cameraNeededTitle": "Camera access needed",
+    "cameraNeededMessage": "Allow camera access in Settings to photograph receipts for scanning. You can still choose a photo from your gallery.",
+    "openSettings": "Open Settings",
+    "tryCameraAgain": "Try Camera Again",
+    "eyebrow": "AI Receipt Scanner",
+    "tip": "Clear photos work best — flatten the receipt and avoid glare.",
+    "scanningHint": "Extracting vendor, amount, and date…",
+    "reviewHint": "Confirm the details before saving.",
+    "savedBody": "Added to your expenses. Ready for the next one?"
   },
   "settings": {
     "back": "Back",
@@ -183,7 +196,7 @@
     "fullNameLabel": "Full Name",
     "fullNamePlaceholder": "Your name",
     "homeCurrencyLabel": "Home Currency",
-    "currencyWarning": "⚠️ Changing your home currency only affects new expenses. Existing expenses keep their original conversion.",
+    "currencyWarning": "Changing your home currency only affects new expenses. Existing expenses keep their original conversion.",
     "saving": "Saving…",
     "saveChanges": "Save Changes",
     "account": "Account",
@@ -207,7 +220,17 @@
     "restoreSuccess": "Purchases restored.",
     "restoreNone": "No active purchases found to restore.",
     "loadingOffering": "Loading…",
-    "offeringUnavailable": "Premium is not available right now. Please try again later."
+    "offeringUnavailable": "Premium is not available right now. Please try again later.",
+    "upsell": {
+      "eyebrow": "Zingg Premium",
+      "title": "See the story behind your spending",
+      "body": "Unlock AI recaps, deeper insights, and an ad-free experience built for clarity.",
+      "insightsTitle": "AI recaps are a Premium feature",
+      "insightsBody": "Get a clear monthly narrative of where your money went — written for you, not a spreadsheet dump.",
+      "featureRecap": "AI monthly spending recaps",
+      "featureInsights": "Deeper vendor & trend insights",
+      "featureAdFree": "Ad-free tracking"
+    }
   },
   "deleteAccount": {
     "button": "Delete account",
@@ -217,5 +240,29 @@
     "passwordLabel": "Password",
     "confirm": "Delete permanently",
     "error": "Could not delete your account. Check your password and try again."
+  },
+  "aiConsent": {
+    "title": "Allow AI processing?",
+    "body": "To scan receipts and generate spending recaps, Zingg shares personal data with {{provider}}, a third-party AI service.",
+    "bulletReceipts": "Receipt photos you choose to scan or upload",
+    "bulletExpenses": "Expense details (vendor, amount, category, date) used for AI monthly recaps",
+    "purpose": "Data is sent only to power these features. {{provider}} processes it under its own privacy policy. You can withdraw permission anytime in Settings.",
+    "privacyLink": "Read Zingg Privacy Policy",
+    "providerPrivacyLink": "Read {{provider}} Privacy Policy",
+    "allow": "Allow",
+    "deny": "Don’t Allow",
+    "footnote": "You can still add expenses manually without AI processing.",
+    "settingsTitle": "AI processing",
+    "settingsSubtitle": "Share receipt photos and expense details with {{provider}} for scanning and recaps",
+    "enabled": "Allowed",
+    "disabled": "Not allowed",
+    "requiredTitle": "AI permission required",
+    "requiredMessage": "Allow AI processing in Settings to use receipt scanning and AI recaps."
+  },
+  "legal": {
+    "sectionTitle": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "support": "Contact Support"
   }
 }
